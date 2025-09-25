@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ciudadano ChatBot</title>
+  </head>
+
+  <body>
+    <form method="POST">
+      {% csrf_token %}
+      <label>Categoría:</label>
+      <select name="categoria">
+        <option value="robo">Robo</option>
+        <option value="violencia">Violencia</option>
+        <option value="acoso">Acoso</option>
+        <option value="ambiental">Ambiental</option>
+        <option value="otro">Otro</option>
+        </select><br/>
+
+      <label>Descripción:</label><br />
+      <textarea rows="4" cols="50" name="descripcion"></textarea><br />
+
+      <label>Ubicación:</label>
+      <input type="text" name="ubicacion" /><br />
+
+      <label>¿Quieres dejar tus datos?</label>
+      <input type="checkbox" name="anonimo" checked /> Anónimo<br />
+
+      <label>Nombre:</label>
+      <input type="text" name="nombre_contacto" /><br />
+
+      <label>Email:</label>
+      <input type="email" name="email" /><br />
+
+      <button type="submit">Enviar</button>
+    </form>
+  </body>
+</html>

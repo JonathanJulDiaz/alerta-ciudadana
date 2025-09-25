@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard</title>
+    <style>
+      table,
+      th,
+      td {
+        border: 1px solid black;
+        border-collapse: collapse; /* Collapses borders for a cleaner look */
+        padding: 8px; /* Adds spacing inside cells */
+      }
+    </style>
+  </head>
+  <body style="background-color: #61b0e4ff">
+    <h1>Reportes recientes</h1>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Categoria</th>
+          <th>Descripción</th>
+          <th>Ubicación</th>
+          <th>Fecha</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for r in reportes %}
+        <tr>
+          <td>{{ r.categoria|capfirst }}</td>
+          <td>{{ r.descripcion }}</td>
+          <td>{{ r.ubicacion }}</td>
+          <td>{{ r.fecha }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </body>
+</html>

@@ -5,18 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Ciudadano ChatBot</title>
   </head>
-
   <body>
+    <h1>Alerta Ciudadana</h1>
+    <p>
+      Enviaremos tu reporte a la comunidad para que puedan tomar medidas
+      adecuadas.
+    </p><br />
     <form method="POST">
       {% csrf_token %}
       <label>Categoría:</label>
       <select name="categoria">
-        <option value="robo">Robo</option>
-        <option value="violencia">Violencia</option>
-        <option value="acoso">Acoso</option>
-        <option value="ambiental">Ambiental</option>
-        <option value="otro">Otro</option>
-        </select><br/>
+        <option value="Robo">Robo</option>
+        <option value="Violencia">Violencia</option>
+        <option value="Acoso">Acoso</option>
+        <option value="Ambiental">Ambiental</option>
+        <option value="Otro">Otro</option></select><br />
 
       <label>Descripción:</label><br />
       <textarea rows="4" cols="50" name="descripcion"></textarea><br />
@@ -25,15 +28,27 @@
       <input type="text" name="ubicacion" /><br />
 
       <label>¿Quieres dejar tus datos?</label>
-      <input type="checkbox" name="anonimo" checked /> Anónimo<br />
+      <input onchange="onAnonimoChange()" type="checkbox" name="anonimo" checked/> Anónimo<br />
 
-      <label>Nombre:</label>
-      <input type="text" name="nombre_contacto" /><br />
+      <div name="contacto">
+        <label>Nombre:</label>
+        <input type="text" name="nombre_contacto" /><br />
 
-      <label>Email:</label>
-      <input type="email" name="email" /><br />
+        <label>Email:</label>
+        <input type="email" name="email" /><br />
+      </div>
 
       <button type="submit">Enviar</button>
     </form>
+    <script>
+      function onAnonimoChange() {
+        let contactoElement = document.querySelector('[name="contacto"]');
+        contactoElement.hidden = !contactoElement.hidden;
+        let nombre = document.querySelector('[name="nombre_contacto"]');
+        let email = document.querySelector('[name="email"]');
+        nombre.disabled = contactoElement.hidden;
+        email.disabled = contactoElement.hidden;
+      }
+    </script>
   </body>
 </html>

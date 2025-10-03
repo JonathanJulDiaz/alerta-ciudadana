@@ -1,42 +1,75 @@
 {% extends "base.html" %}
+
 {% block content %}
+
 {% load static %}
 
-<div style="display: flex; justify-content: center; align-items: center; gap: 5%">
-  <h1
-    style="
-      font-size: 60px;
-      font-weight: bolder;
-      font-style: normal;
-      color: rgb(0, 146, 22);
-      font-kerning: normal;
-
-      -webkit-text-stroke: 2px rgb(2, 117, 19);
-      text-decoration-line: none;
-      text-decoration-thickness: initial;
-      text-decoration-style: initial;
-      text-transform: uppercase;
-    "
-  >
-    antioquia por la paz
-  </h1>
-  <img
-    style="height: 6%; width: 6%"
-    src="{% static 'img/logo.jpg' %}"
-    alt="Antioquia por la paz"
-  />
+<div class="flex justify-center items-center gap-5 mb-5">
+  <h1 class="text-[clamp(1rem,5vw,4.5rem)] font-bold text-[#009216] uppercase" style="text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;">antioquia por la paz</h1>
+  <img class="w-[clamp(2rem,5vw,6rem)] h-auto" src="{% static 'img/logo.jpg' %}" alt="Antioquia por la paz"/>
 </div>
-<img
-  style="
-    width: 80%;
-    height: 80%;
-    object-fit: fill;
-    display: block;
-    overflow-clip-margin: content-box;
-    overflow: clip;
-  "
-  src="{% static 'img/background_image.jpg' %}"
-  alt="background_image"
-/>
-<span>sumate a la iniciativa de participación <br />ciudadana colectiva</span>
+
+<div class="flex justify-center items-center mb-5">
+  <img class="w-full h-auto" src="{% static 'img/background_image.jpg' %}" alt="background_image" />
+</div>
+
+<div class="bg-[#009216] rounded-full p-3 flex justify-center items-center mb-20">
+  <span class="text-white text-[clamp(1rem,5vw,4.5rem)] text-center">
+    Sumate a la iniciativa de participación <br />ciudadana colectiva
+  </span>
+</div>
+
+<div class="flex flex-col lg:flex-row justify-center items-center mb-10 gap-10">
+  <a class="flex justify-evenly items-center bg-[#009216] rounded-full p-3 gap-5">
+    <img class="bg-white rounded-full w-12 h-12 p-1" src="{% static 'icons/link.svg' %}" alt="Chatbot"/>
+    <p class="text-white text-[clamp(2rem,3vw,3rem)]">
+      Chat bot
+    </p>
+  </a>
+
+  <a class="flex justify-evenly items-center bg-[#009216] rounded-full p-3 gap-5">
+    <img class="bg-white rounded-full w-12 h-12 p-1" src="{% static 'icons/link.svg' %}" alt="Conocenos"/>
+    <p class="text-white text-[clamp(2rem,3vw,3rem)]">
+      Conocenos
+    </p>
+  </a>
+
+  <a class="flex justify-evenly items-center bg-[#009216] rounded-full p-3 gap-5">
+    <img class="bg-white rounded-full w-12 h-12 p-1" src="{% static 'icons/link.svg' %}" alt="Envia tus propuestas"/>
+    <p class="text-white text-[clamp(2rem,3vw,3rem)]">
+      Envia tus propuestas
+    </p>
+  </a>
+</div>
+
+<div class="flex justify-center">
+  <img class="w-1/4 h-auto" src="{% static 'img/woman.png' %}" alt="woman" />
+
+  <div class="w-1/4 h-1/5 bg-amber-500 rounded-full p-5">
+    <p class=" text-white font-bold text-center text-wrap text-[clamp(0.5rem,1vw,5rem)]">
+      Los usuarios registrados pueden compartir propuestas y debatir ideas. Reglas claras de respeto y moderación
+      <br>
+      <span class="text-red-600 font-extrabold">
+        FRENAMOS NOTICIAS FALSAS
+      </span>
+    </p>
+    
+  </div>
+</div>
+
+<div class="flex flex-col justify-center items-center mb-2">
+  <p class="text-[#026911] text-center text-[clamp(1rem,5vw,4.5rem)] font-extrabold mb-2">
+    Tu idea puede inspirar a toda Antioquia. Participa en los debates ayúdanos a construir una paz duradera
+  </p>
+
+  <img class="w-1/2 h-auto" src="{% static 'img/map.jpg' %}" alt="antioquia_map">
+</div>
+
+<a class="flex justify-center items-center bg-[#009216] rounded-full p-3 gap-5">
+    <img class="bg-white rounded-full w-12 h-12 p-1" src="{% static 'icons/link.svg' %}" alt="Mapa de alertas"/>
+    <p class="text-white text-[clamp(2rem,3vw,3rem)]">
+      Mapa de alertas
+    </p>
+</a>
+
 {% endblock %}

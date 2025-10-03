@@ -8,7 +8,8 @@
     <title>{% block title %}Antioquia por la paz{% endblock %}</title>
   </head>
 
-<body>
+<body class="bg-[#fff5cd] m-4">
+    {% comment %}
     <div id="sidebar">
         {% block sidebar %}
         <ul>
@@ -17,10 +18,17 @@
         </ul>
         {% endblock %}
     </div>
+    {% endcomment %}
 
     <div id="content">
         {% block content %}
         {% endblock %}
     </div>
+
+    <footer style="margin-top: 50px;">
+      <p class="text-[#009216] font-semibold text-[clamp(0.8rem,1vw,2rem)]">
+        El contenido de esta plataforma —incluyendo textos, imágenes, diseños y elementos interactivos— está protegido por la Ley 23 de 1982 y la DecisiónAndina 351 de 1993 sobre derechos de autor. Queda prohibida su reproducción total o parcial sin autorización expresa.
+      </p>
+    </footer>
 </body>
 </html>

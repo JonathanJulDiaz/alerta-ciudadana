@@ -1,3 +1,7 @@
+# Node
+node_modules/
+static/src/output.css
+
 __pycache__/
 *.pyc
 *.pyo

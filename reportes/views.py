@@ -3,6 +3,9 @@ from .models import Reporte
 
 import requests
 
+def landing_page(request):
+    return render(request, 'index.html')
+
 def crear_reporte(request):
     
     if request.method == 'POST':
@@ -37,11 +40,11 @@ def crear_reporte(request):
             pass
 
         return redirect('gracias')
-    return render(request, 'reportes/formulario.html')
+    return render(request, 'formulario.html')
 
 def dashboard(request):
     reportes = Reporte.objects.order_by('-fecha')
-    return render(request, 'reportes/dashboard.html', {'reportes': reportes})
+    return render(request, 'dashboard.html', {'reportes': reportes})
 
 def agradecimiento(request):
-    return render(request, 'reportes/gracias.html')
+    return render(request, 'gracias.html')

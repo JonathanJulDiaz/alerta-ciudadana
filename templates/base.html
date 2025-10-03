@@ -9,16 +9,40 @@
   </head>
 
 <body class="bg-[#fff5cd] m-4">
-    {% comment %}
-    <div id="sidebar">
-        {% block sidebar %}
-        <ul>
-            <li><a class="bg-blue-500" href="/">Home</a></li>
-            <li><a class="bg-red-500" href="/blog/">Blog</a></li>
-        </ul>
-        {% endblock %}
-    </div>
-    {% endcomment %}
+
+  <nav class="bg-[#fff3c2] px-4 py-3 border-8 border-amber-300 rounded-full mb-10">
+    <div class="max-w-7xl mx-auto flex justify-between items-center">
+
+      <a href="{% url 'landing_page' %}" class="text-xl font-bold text-gray-800">
+        Antioquia por la paz
+      </a>
+
+      <div class="hidden min-[700px]:flex justify-center items-center space-x-6">
+        <a class="text-black font-bold hover:text-green-500" href="#">Foro </a>
+        <a class="text-black font-bold hover:text-green-500" href="{% url 'about_us' %}">Sobre nosotros </a>
+        <a class="text-black font-bold hover:text-green-500" href="#">Contactanos</a>
+      </div>
+
+      <div class="max-[700px]:flex relative hidden justify-center items-center">
+        <button id="menuButton" onclick="toggleMenu(this)" class="text-md active:font-bold hover:text-blue-400 text-lg text-center w-full no-underline sm:w-auto sm:pr-4 py-2 sm:py-1">
+          <svg class="w-6 h-6" fill="none hover:text-blue-400" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+        </button>
+
+        <div id="menu" class="absolute z-10 hidden bg-grey-200 translate-y-20 -translate-x-10">
+          <div class="px-2 pt-2 pb-4 bg-amber-300 shadow-lg">
+            <div class="flex-col">
+              <ul>
+                <li><a class="text-white" href="#">Foro </a></li>
+                <li><a class="text-white" href="{% url 'about_us' %}">Sobre nosotros </a></li>
+                <li><a class="text-white" href="#">Contactanos</a></li>
+              <ul>
+            </div>
+          </div>
+        </div>
+      </div>
+  </nav>
 
     <div id="content">
         {% block content %}
@@ -31,4 +55,11 @@
       </p>
     </footer>
 </body>
+<script>
+  function toggleMenu(button) {
+    const menu = document.getElementById('menu');
+    menu.classList.toggle('hidden');
+    this.classList.toggle('hidden');
+  }
+</script>
 </html>

@@ -6,6 +6,9 @@ import requests
 def landing_page(request):
     return render(request, 'index.html')
 
+def about_us(request):
+    return render(request, 'about_us.html')
+
 def crear_reporte(request):
     
     if request.method == 'POST':

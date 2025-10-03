@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% load static %}
+
+<div class=" flex justify-center items-center mb-10">
+  <span class="bg-[#009216] rounded-full p-10 font-serif text-white text-[clamp(1rem,5vw,4.5rem)] text-center">
+    ¿Quienes somos?
+  </span>
+</div>
+
+<div class="flex justify-center items-center mb-5">
+    <img src="{% static 'img/universities.jpg' %}" alt="universities">
+</div>
+
+<div class="mx-20">
+    <p class="font-serif text-[clamp(1rem,3vw,4rem)]">
+        Antioquia por la Paz nació como un trabajo de clase dentro del marco académico del G-8 de universidades de Antioquia, una alianza de instituciones de educación superior que promueven la formación integral y el compromiso social de sus estudiantes.
+    </p>
+    <br>
+    <p class="font-serif text-[clamp(1rem,3vw,4rem)]">
+        Lo que comenzó como un ejercicio académico se transformó en una propuesta con impacto real: una plataforma que integra chatbots comunitarios, mapas de alertas tempranas y detección de riesgos, orientada a fortalecer la participación ciudadana, la memoria histórica y la construcción de paz en nuestro departamento.
+    </p>
+    <br>
+    <p class="font-serif text-[clamp(1rem,3vw,4rem)]">
+        Hoy representamos el esfuerzo conjunto de estudiantes, docentes e investigadores que creen en la importancia de llevar el conocimiento más allá de las aulas, para contribuir a una Antioquia más justa, incluyente y en paz.
+    </p>
+</div>
+
+{% endblock %}

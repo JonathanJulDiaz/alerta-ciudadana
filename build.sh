@@ -7,6 +7,9 @@ npm install
 # 2. Compilar Tailwind CSS
 npm run build-css
 
+echo "📁 Contenido de static/src después de compilar Tailwind:"
+ls -l static/src/
+
 # 3. Migraciones y archivos estáticos
 pip install -r requirements.txt
 python manage.py migrate --noinput

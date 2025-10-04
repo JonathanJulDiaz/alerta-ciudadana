@@ -1,6 +1,6 @@
 # Node
 node_modules/
-#static/src/output.css
+static/src/output.css
 
 __pycache__/
 *.pyc

@@ -4,8 +4,6 @@ services:
     runtime: python
     buildCommand: ./build.sh
     startCommand: gunicorn alerta_ciudadana.wsgi:application
-    static:
-      static_dir: staticfiles
     envVars:
       - key: DJANGO_SETTINGS_MODULE
         value: alerta_ciudadana.settings

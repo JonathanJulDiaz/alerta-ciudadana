@@ -42,3 +42,6 @@ ls -la static/src/
 
 echo "📁 Archivos en staticfiles:"
 ls -la staticfiles/
+
+echo "📂 Listado de staticfiles:"
+tree staticfiles || ls -la staticfiles

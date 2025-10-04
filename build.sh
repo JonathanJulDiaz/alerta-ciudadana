@@ -33,3 +33,12 @@ if not User.objects.filter(username=username).exists():
 EOF
 
 echo "✅ Build complete"
+
+echo "🔍 Buscando output.css..."
+find . -name "output.css"
+
+echo "📁 Archivos en static/src:"
+ls -la static/src/
+
+echo "📁 Archivos en staticfiles:"
+ls -la staticfiles/

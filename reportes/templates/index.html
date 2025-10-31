@@ -6,11 +6,11 @@
 
 <div class="flex justify-center items-center gap-5 mb-5">
   <h1 class="text-[clamp(1rem,5vw,4.5rem)] font-bold text-[#009216] uppercase" style="text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;">antioquia por la paz</h1>
-  <img class="w-[clamp(2rem,5vw,6rem)] h-auto" src="{% static 'img/logo.jpg' %}" alt="Antioquia por la paz"/>
+  <img class="w-[clamp(2rem,5vw,6rem)] h-auto" src="{% static 'reportes/img/logo.jpg' %}" alt="Antioquia por la paz"/>
 </div>
 
 <div class="flex justify-center items-center mb-5">
-  <img class="w-full h-auto" src="{% static 'img/background_image.jpg' %}" alt="background_image" />
+  <img class="w-full h-auto" src="{% static 'reportes/img/background_image.jpg' %}" alt="background_image" />
 </div>
 
 <div class="bg-[#009216] rounded-full p-3 flex justify-center items-center mb-20">
@@ -21,21 +21,21 @@
 
 <div class="flex flex-col lg:flex-row justify-center items-center mb-10 gap-10">
   <a class="flex justify-evenly items-center bg-[#009216] rounded-full p-3 gap-5">
-    <img class="bg-white rounded-full w-12 h-12 p-1" src="{% static 'icons/link.svg' %}" alt="Chatbot"/>
+    <img class="bg-white rounded-full w-12 h-12 p-1" src="{% static 'reportes/icons/link.svg' %}" alt="Chatbot"/>
     <p class="text-white text-[clamp(2rem,3vw,3rem)]">
       Chat bot
     </p>
   </a>
 
   <a class="flex justify-evenly items-center bg-[#009216] rounded-full p-3 gap-5" href="{% url 'about_us' %}">
-    <img class="bg-white rounded-full w-12 h-12 p-1" src="{% static 'icons/link.svg' %}" alt="Conocenos"/>
+    <img class="bg-white rounded-full w-12 h-12 p-1" src="{% static 'reportes/icons/link.svg' %}" alt="Conocenos"/>
     <p class="text-white text-[clamp(2rem,3vw,3rem)]">
       Conocenos
     </p>
   </a>
 
   <a class="flex justify-evenly items-center bg-[#009216] rounded-full p-3 gap-5">
-    <img class="bg-white rounded-full w-12 h-12 p-1" src="{% static 'icons/link.svg' %}" alt="Envia tus propuestas"/>
+    <img class="bg-white rounded-full w-12 h-12 p-1" src="{% static 'reportes/icons/link.svg' %}" alt="Envia tus propuestas"/>
     <p class="text-white text-[clamp(2rem,3vw,3rem)]">
       Envia tus propuestas
     </p>
@@ -43,7 +43,7 @@
 </div>
 
 <div class="flex justify-center">
-  <img class="w-1/4 h-auto" src="{% static 'img/woman.png' %}" alt="woman" />
+  <img class="w-1/4 h-auto" src="{% static 'reportes/img/woman.png' %}" alt="woman" />
 
   <div class="w-1/4 h-1/5 bg-amber-500 rounded-full p-5">
     <p class=" text-white font-bold text-center text-wrap text-[clamp(0.5rem,1vw,5rem)]">
@@ -62,14 +62,27 @@
     Tu idea puede inspirar a toda Antioquia. Participa en los debates ayúdanos a construir una paz duradera
   </p>
 
-  <img class="w-1/2 h-auto" src="{% static 'img/map.jpg' %}" alt="antioquia_map">
+  <img class="w-1/2 h-auto" src="{% static 'reportes/img/map.jpg' %}" alt="antioquia_map">
 </div>
 
-<a class="flex justify-center items-center bg-[#009216] rounded-full p-3 gap-5">
-    <img class="bg-white rounded-full w-12 h-12 p-1" src="{% static 'icons/link.svg' %}" alt="Mapa de alertas"/>
+<a class="flex justify-center items-center bg-[#009216] rounded-full p-3 gap-5 mb-5">
+    <img class="bg-white rounded-full w-12 h-12 p-1" src="{% static 'reportes/icons/link.svg' %}" alt="Mapa de alertas"/>
     <p class="text-white text-[clamp(2rem,3vw,3rem)]">
       Mapa de alertas
     </p>
 </a>
+
+ <div class="max-w-4xl mx-auto py-10">
+    <h2 class="text-3xl font-bold mb-6 text-center">Preguntas Frecuentes</h2>
+
+    <div class="space-y-6">
+      {% for item in preguntas %}
+        <div class="bg-white rounded shadow p-4">
+          <h3 class="text-xl font-semibold text-green-700">{{ item.pregunta }}</h3>
+          <p class="mt-2 text-gray-700">{{ item.respuesta }}</p>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
 
 {% endblock %}

@@ -19,3 +19,10 @@ class Reporte(models.Model):
 
     def __str__(self):
         return f"{self.categoria} en {self.ubicacion} el {self.fecha}"
+
+class PreguntaFrecuente(models.Model):
+    pregunta = models.CharField(max_length=255)
+    respuesta = models.TextField()
+
+    def __str__(self):
+        return self.pregunta

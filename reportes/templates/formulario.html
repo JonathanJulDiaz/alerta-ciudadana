@@ -1,54 +1,146 @@
-<!DOCTYPE html>
-<html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Ciudadano ChatBot</title>
-  </head>
-  <body>
-    <h1>Alerta Ciudadana</h1>
-    <p>
-      Enviaremos tu reporte a la comunidad para que puedan tomar medidas
-      adecuadas.
-    </p><br />
-    <form method="POST">
-      {% csrf_token %}
-      <label>Categoría:</label>
-      <select name="categoria">
-        <option value="Robo">Robo</option>
-        <option value="Violencia">Violencia</option>
-        <option value="Acoso">Acoso</option>
-        <option value="Ambiental">Ambiental</option>
-        <option value="Otro">Otro</option></select><br />
+{% extends "base.html" %}
 
-      <label>Descripción:</label><br />
-      <textarea rows="4" cols="50" name="descripcion"></textarea><br />
+{% block content %}
 
-      <label>Ubicación:</label>
-      <input type="text" name="ubicacion" /><br />
+{% load static %}
 
-      <label>¿Quieres dejar tus datos?</label>
-      <input onchange="onAnonimoChange()" type="checkbox" name="anonimo" checked/> Anónimo<br />
+<div
+  class="min-h-screen flex flex-col items-center justify-center bg-amber-100 p-6"
+>
+  <div class="w-full max-w-lg bg-white rounded-lg shadow-lg p-6">
+    <h1 class="text-2xl font-bold text-gray-800 mb-4 text-center">
+      Reporte Ciudadano
+    </h1>
 
-      <div name="contacto">
-        <label>Nombre:</label>
-        <input type="text" name="nombre_contacto" /><br />
-
-        <label>Email:</label>
-        <input type="email" name="email" /><br />
+    <form id="reporteForm" class="space-y-4">
+      <!-- Barrio -->
+      <div>
+        <label for="barrio" class="block text-sm font-medium text-gray-700"
+          >Barrio</label
+        >
+        <input
+          type="text"
+          id="barrio"
+          name="barrio"
+          required
+          class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2"
+          placeholder="Ejemplo: Prado"
+        />
       </div>
 
-      <button type="submit">Enviar</button>
+      <!-- Fecha -->
+      <div>
+        <label for="fecha" class="block text-sm font-medium text-gray-700"
+          >Fecha del suceso</label
+        >
+        <input
+          type="date"
+          id="fecha"
+          name="fecha"
+          required
+          class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2"
+        />
+      </div>
+
+      <!-- Hora -->
+      <div>
+        <label for="hora" class="block text-sm font-medium text-gray-700"
+          >Hora del suceso</label
+        >
+        <input
+          type="time"
+          id="hora"
+          name="hora"
+          required
+          class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2"
+        />
+      </div>
+
+      <!-- Tipo de suceso -->
+      <div>
+        <label for="tipo_suceso" class="block text-sm font-medium text-gray-700"
+          >Tipo de suceso</label
+        >
+        <select
+          id="tipo_suceso"
+          name="tipo_suceso"
+          required
+          class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2"
+        >
+          <option value="">Selecciona una opción</option>
+          <option value="robo">Robo</option>
+          <option value="homicidio">Homicidio</option>
+          <option value="violencia">Violencia</option>
+          <option value="asalto">Asalto</option>
+          <option value="otro">Otro</option>
+        </select>
+      </div>
+
+      <!-- Descripción -->
+      <div>
+        <label for="descripcion" class="block text-sm font-medium text-gray-700"
+          >Descripción del suceso</label
+        >
+        <textarea
+          id="descripcion"
+          name="descripcion"
+          rows="3"
+          class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2"
+          placeholder="Describe lo ocurrido brevemente"
+        ></textarea>
+      </div>
+
+      <!-- Botón enviar -->
+      <button
+        type="submit"
+        class="w-full bg-green-600 text-white font-semibold py-2 px-4 rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 transition-colors duration-300"
+      >
+        Enviar reporte
+      </button>
     </form>
-    <script>
-      function onAnonimoChange() {
-        let contactoElement = document.querySelector('[name="contacto"]');
-        contactoElement.hidden = !contactoElement.hidden;
-        let nombre = document.querySelector('[name="nombre_contacto"]');
-        let email = document.querySelector('[name="email"]');
-        nombre.disabled = contactoElement.hidden;
-        email.disabled = contactoElement.hidden;
-      }
-    </script>
-  </body>
-</html>
+
+    <!-- Resultado -->
+    <div
+      id="resultado"
+      class="mt-6 hidden bg-gray-50 p-4 rounded border border-gray-200"
+    >
+      <h2 class="text-lg font-bold text-gray-800 mb-2">Reporte generado:</h2>
+      <pre
+        id="reporteJSON"
+        class="text-sm text-gray-700 bg-white p-2 rounded border"
+      ></pre>
+    </div>
+  </div>
+</div>
+
+<script>
+  document
+    .getElementById("reporteForm")
+    .addEventListener("submit", async function (e) {
+      e.preventDefault();
+
+      // Obtener valores
+      const reporte = {
+        barrio: document.getElementById("barrio").value.trim(),
+        fecha: document.getElementById("fecha").value,
+        hora: document.getElementById("hora").value,
+        tipo_suceso: document.getElementById("tipo_suceso").value,
+        descripcion: document.getElementById("descripcion").value.trim(),
+      };
+
+      // Ejemplo de envío al backend o N8N
+      /*
+  await fetch("/procesar_reporte/", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(reporte)
+  });
+  */
+
+      // Feedback visual
+      alert("✅ Tu reporte ha sido enviado correctamente.");
+    });
+</script>
+
+
+{% endblock %}

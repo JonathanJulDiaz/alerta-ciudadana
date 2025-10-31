@@ -3,7 +3,7 @@
   <head>
     {% load static %}
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <link href="{% static 'src/output.css' %}" rel="stylesheet">
     <title>{% block title %}Antioquia por la paz{% endblock %}</title>
   </head>
@@ -18,7 +18,7 @@
       </a>
 
       <div class="hidden min-[700px]:flex justify-center items-center space-x-6">
-        <a class="text-black font-bold hover:text-green-500" href="#">Foro </a>
+        <a class="text-black font-bold hover:text-green-500" href="{% url 'crear_reporte' %}">Reportar incidente </a>
         <a class="text-black font-bold hover:text-green-500" href="{% url 'about_us' %}">Sobre nosotros </a>
         <a class="text-black font-bold hover:text-green-500" href="#">Contactanos</a>
       </div>
@@ -34,7 +34,7 @@
           <div class="px-2 pt-2 pb-4 bg-amber-300 shadow-lg">
             <div class="flex-col">
               <ul>
-                <li><a class="text-white" href="#">Foro </a></li>
+                <li><a class="text-white" href="{% url 'crear_reporte' %}">Reportar incidente</a></li>
                 <li><a class="text-white" href="{% url 'about_us' %}">Sobre nosotros </a></li>
                 <li><a class="text-white" href="#">Contactanos</a></li>
               <ul>
@@ -48,6 +48,124 @@
         {% block content %}
         {% endblock %}
     </div>
+
+    <!-- Botón flotante -->
+<button id="toggleChat"
+  class="fixed bottom-6 right-6 bg-green-500 text-black p-4 rounded-full shadow-lg hover:bg-amber-300 transition-colors duration-300 focus:outline-none">
+  Asistente de paz
+</button>
+
+<!-- Contenedor del chatbot -->
+<div id="chatContainer"
+  class="hidden fixed bottom-20 right-6 w-80 bg-gray-100 rounded-lg shadow-xl overflow-hidden border border-gray-300">
+  
+  <div class="bg-green-500 text-white p-3 flex justify-between items-center">
+    <h2 class="font-bold text-lg">Antioquia por la Paz</h2>
+    <button id="closeChat" class="text-white font-bold">✕</button>
+  </div>
+
+  <div id="chat" class="h-80 overflow-y-auto p-4 bg-white flex flex-col space-y-2"></div>
+
+  <form id="chatForm" class="flex space-x-2 p-2 bg-gray-100 border-t">
+    <input type="text" id="userInput" class="flex-1 border p-2 rounded text-sm"
+      placeholder="Escribe tu respuesta..." autocomplete="off" required>
+    <button type="submit" class="bg-green-800 text-white px-3 rounded text-sm">Enviar</button>
+  </form>
+</div>
+
+<!-- Resultado JSON (oculto o solo para depuración) -->
+<div class="hidden">
+  <pre id="reporteJSON"></pre>
+</div>
+
+<script>
+// --- VARIABLES Y FUNCIONES DE CHAT ---
+const chatContainer = document.getElementById("chatContainer");
+const toggleChat = document.getElementById("toggleChat");
+const closeChat = document.getElementById("closeChat");
+const chat = document.getElementById("chat");
+const chatForm = document.getElementById("chatForm");
+const userInput = document.getElementById("userInput");
+const reporteJSON = document.getElementById("reporteJSON");
+
+// Mostrar / ocultar chat
+toggleChat.addEventListener("click", () => {
+  chatContainer.classList.toggle("hidden");
+});
+closeChat.addEventListener("click", () => {
+  chatContainer.classList.add("hidden");
+});
+
+// Lista de barrios conocidos
+const barrios = ["Prado", "Laureles", "Robledo", "Envigado"];
+
+// Normalizar barrio
+function normalizarBarrio(texto) {
+  texto = texto.toLowerCase().trim();
+  texto = texto.replace(/en el barrio\s*/i, "").replace(/del barrio\s*/i, "");
+  const encontrado = barrios.find(b => texto.includes(b.toLowerCase()));
+  if (encontrado) return encontrado;
+  return texto.charAt(0).toUpperCase() + texto.slice(1);
+}
+
+// Campos
+const campos = [
+  { key: "barrio", pregunta: "¡Hola! Soy Asistente de paz. Estoy para ayudarle a reportar cualquier tipo de incidente. ¿En qué barrio ocurrió el suceso?" },
+  { key: "fecha", pregunta: "¿Cuál fue la fecha del suceso? (YYYY-MM-DD)" },
+  { key: "hora", pregunta: "¿A qué hora ocurrió el suceso? (HH:MM)" },
+  { key: "tipo_suceso", pregunta: "¿Qué tipo de suceso ocurrió? (Robo, Homicidio, Violencia, Asalto)" },
+  { key: "descripcion", pregunta: "Descripción opcional del suceso" }
+];
+
+let reporte = {};
+let paso = 0;
+
+// Mostrar mensaje
+function addMessage(text, from = "bot") {
+  const div = document.createElement("div");
+  div.className = from === "bot" 
+    ? "bg-gray-200 text-gray-900 p-2 rounded self-start text-sm"
+    : "bg-blue-500 text-white p-2 rounded self-end text-sm";
+  div.innerText = text;
+  chat.appendChild(div);
+  chat.scrollTop = chat.scrollHeight;
+}
+
+// Iniciar conversación
+addMessage(campos[paso].pregunta);
+
+chatForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+  let respuesta = userInput.value.trim();
+  if (!respuesta) return;
+
+  addMessage(respuesta, "user");
+
+  // Normalizar si es el barrio
+  if (campos[paso].key === "barrio") {
+    respuesta = normalizarBarrio(respuesta);
+  }
+
+  reporte[campos[paso].key] = respuesta;
+
+  paso++;
+  userInput.value = "";
+
+  if (paso < campos.length) {
+    addMessage(campos[paso].pregunta);
+  } else {
+    addMessage("¡Gracias! Tu reporte ha sido generado. ✅");
+    console.log(JSON.stringify(reporte, null, 2));  
+
+    // Ejemplo de envío a backend/N8N:
+    // fetch("/procesar_reporte/", {
+    //   method: "POST",
+    //   headers: { 'Content-Type': 'application/json' },
+    //   body: JSON.stringify(reporte)
+    // });
+  }
+});
+</script>
 
     <footer style="margin-top: 50px;">
       <p class="text-[#009216] font-semibold text-[clamp(0.8rem,1vw,2rem)]">
